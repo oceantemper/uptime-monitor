@@ -1,0 +1,6 @@
+@UptimeMonitor.Web_HostAddress = http://localhost:5272
+
+GET {{UptimeMonitor.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

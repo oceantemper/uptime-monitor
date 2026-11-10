@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/UptimeMonitor.Application/UptimeMonitor.Application.csproj" />
+    <Project Path="src/UptimeMonitor.Domain/UptimeMonitor.Domain.csproj" />
+    <Project Path="src/UptimeMonitor.Infrastructure/UptimeMonitor.Infrastructure.csproj" />
+    <Project Path="src/UptimeMonitor.Web/UptimeMonitor.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/UptimeMonitor.Application.Tests/UptimeMonitor.Application.Tests.csproj" />
+    <Project Path="tests/UptimeMonitor.Domain.Tests/UptimeMonitor.Domain.Tests.csproj" />
+  </Folder>
+</Solution>
