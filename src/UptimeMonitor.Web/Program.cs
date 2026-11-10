@@ -1,4 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using UptimeMonitor.Application.Abstractions.Persistence;
+using UptimeMonitor.Infrastructure.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("Default")
+    ?? throw new InvalidOperationException("Connection string 'Default' is not configured.");
+
+builder.Services.AddDbContext<UptimeMonitorDbContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddScoped<IEndpointRepository, EndpointRepository>();
+builder.Services.AddScoped<ICheckResultRepository, CheckResultRepository>();
+builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

@@ -2,6 +2,10 @@ namespace UptimeMonitor.Domain;
 
 public sealed class CheckResult
 {
+    private CheckResult()
+    {
+    }
+
     public CheckResult(
         Guid endpointId,
         DateTimeOffset checkedAt,

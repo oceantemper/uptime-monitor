@@ -2,6 +2,12 @@ namespace UptimeMonitor.Domain;
 
 public sealed class MonitoredEndpoint
 {
+    private MonitoredEndpoint()
+    {
+        Name = null!;
+        Url = null!;
+    }
+
     public MonitoredEndpoint(string name, string url, TimeSpan checkInterval)
     {
         if (string.IsNullOrWhiteSpace(name))

@@ -8,5 +8,6 @@
   <Folder Name="/tests/">
     <Project Path="tests/UptimeMonitor.Application.Tests/UptimeMonitor.Application.Tests.csproj" />
     <Project Path="tests/UptimeMonitor.Domain.Tests/UptimeMonitor.Domain.Tests.csproj" />
+    <Project Path="tests/UptimeMonitor.Infrastructure.Tests/UptimeMonitor.Infrastructure.Tests.csproj" />
   </Folder>
 </Solution>
