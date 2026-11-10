@@ -7,7 +7,8 @@ namespace UptimeMonitor.Application.UseCases;
 
 public sealed class RecordCheckResult(
     IEndpointRepository endpointRepository,
-    ICheckResultRepository checkResultRepository)
+    ICheckResultRepository checkResultRepository,
+    IUnitOfWork unitOfWork)
 {
     public async Task<CheckResultSummary> ExecuteAsync(
         RecordCheckResultRequest request,
@@ -29,15 +30,9 @@ public sealed class RecordCheckResult(
         endpoint.MarkChecked(request.CheckedAt);
         await endpointRepository.UpdateAsync(endpoint, cancellationToken);
         await checkResultRepository.AddAsync(result, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return new CheckResultSummary(
-            result.Id,
-            result.EndpointId,
-            result.CheckedAt,
-            result.Duration,
-            ToApplicationOutcome(result.Outcome),
-            result.HttpStatusCode,
-            result.FailureDetail);
+        return CheckResultSummary.From(result);
     }
 
     private static Domain.CheckOutcome ToDomainOutcome(DTOs.CheckOutcome outcome)
@@ -46,16 +41,6 @@ public sealed class RecordCheckResult(
         {
             DTOs.CheckOutcome.Succeeded => Domain.CheckOutcome.Succeeded,
             DTOs.CheckOutcome.Failed => Domain.CheckOutcome.Failed,
-            _ => throw new ArgumentOutOfRangeException(nameof(outcome), outcome, "Outcome is not defined.")
-        };
-    }
-
-    private static DTOs.CheckOutcome ToApplicationOutcome(Domain.CheckOutcome outcome)
-    {
-        return outcome switch
-        {
-            Domain.CheckOutcome.Succeeded => DTOs.CheckOutcome.Succeeded,
-            Domain.CheckOutcome.Failed => DTOs.CheckOutcome.Failed,
             _ => throw new ArgumentOutOfRangeException(nameof(outcome), outcome, "Outcome is not defined.")
         };
     }
